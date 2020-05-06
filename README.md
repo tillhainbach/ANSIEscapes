@@ -2,7 +2,7 @@ ANSIEscapes: Python package for quick and readable ANSI Escapes Sequences
 =========================================================================
 
 This package provides human readable functions for adding ANSI escapes sequences to your python console outputs.
-It's loosy based on [ansiescapes] (https://github.com/kodie/ansiescapes), however offers more convenience functions
+It's loosy based on [ansiescapes](https://github.com/kodie/ansiescapes), however offers more convenience functions
 for formatting Rich Text.
 
 Installation
