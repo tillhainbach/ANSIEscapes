@@ -7,9 +7,12 @@ for formatting Rich Text.
 
 Installation
 -----------
+NOTE: This Package is currently under development.
 
-```bash
-pip install ANSIescapes
+```zsh
+git clone https://github.com/tillhainbach/ANSIEscapes.git
+cd ANSIEscapes
+pip install -e .
 ```
 
 Usage
@@ -26,6 +29,8 @@ API-Reference
 --------------
 You can acces the docs using `help(ansi)` in a python REPL or see [docs.md] (./docs.md).
 
+NOTE: This Package is currently under development therefore not all functions will be documented appropiatly.
+Documentation will be added succesively.
 
 License
 --------------
