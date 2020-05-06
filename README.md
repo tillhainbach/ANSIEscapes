@@ -14,7 +14,7 @@ pip install ANSIescapes
 
 Usage
 ------------
-````python
+```python
 from ansiescapes import ANSIEscapes as ansi
 
 # Print blue text on white background:
