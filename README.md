@@ -10,15 +10,15 @@ Installation
 NOTE: This Package is currently under development.
 
 ```zsh
-git clone https://github.com/tillhainbach/ANSIEscapes.git
-cd ANSIEscapes
+git clone https://github.com/tillhainbach/pyansiscapes.git
+cd pyansiecapes
 pip install -e .
 ```
 
 Usage
 ------------
 ```python
-from ansiescapes import ANSIEscapes as ansi
+from pyansiescapes import ANSIEscapes as ansi
 
 # Print blue text on white background:
 print(ansi.formatText("Hello ANSI!", color = 'blue', background = 'white'))
