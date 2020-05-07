@@ -1,4 +1,6 @@
-PyANSIEscapes: Python package for quick and readable ANSI Escapes Sequences
+PyANSIEscapes 
+================
+Python package for quick and readable console manupulation using ANSI Escapes Sequences
 =========================================================================
 
 This package provides human readable functions for adding ANSI escapes sequences to your python console outputs.
