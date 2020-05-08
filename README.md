@@ -23,7 +23,7 @@ Usage
 import pyansiescapes as ansi
 
 # Print blue text on white background:
-print(ansi.formatText("Hello ANSI!", color = 'blue', background = 'white'))
+print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
 
 ```
 
