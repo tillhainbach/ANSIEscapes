@@ -4,6 +4,7 @@ from enum import IntEnum, Enum
 class StrEnum(str, Enum):
     pass
 
+
 class ANSICommands(StrEnum):
     start = "\u001b["
     _debug_esc = "\\u001b"

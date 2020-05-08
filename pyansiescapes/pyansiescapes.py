@@ -7,6 +7,8 @@ import inspect
 
 _logger = logging.getLogger(__file__)
 # Curser controls:
+
+
 def cursor_up(numberOfLines=1):
     return ANSICommands.start + "{:d}A".format(numberOfLines)
 
@@ -15,6 +17,8 @@ def cursor_down(numberOfLines=1):
     return ANSICommands.start + "{:d}B".format(numberOfLines)
 
 # Clearers:
+
+
 def clear_to_end_of_line():
     return ANSICommands.start + "0K"
 
@@ -30,11 +34,14 @@ def clear_line():
 def clear_lines(numberOfLines=1):
     return ((clear_line() + cursor_up()) * numberOfLines)
 
+
 def clear_screen_until_end():
     return ANSICommands.start + "0J"
 
+
 def clear_screen_to_beginning():
     return ANSICommands.start + "1J"
+
 
 def clear_screen():
     return ANSICommands.start + "2J"
@@ -89,7 +96,10 @@ def format(text="", *args, **kwargs) -> str:
     text_attribute_keywords = (
         kwarg for kwarg in kwargs.keys() if kwarg and kwarg in TextAttributes.__members__.keys()
     )
-    text_attributes = (TextAttributes[key] for key in chain(text_attribute_arguments, text_attribute_keywords))
+    text_attributes = (
+        TextAttributes[key] for key in chain(
+            text_attribute_arguments,
+            text_attribute_keywords))
     # parse positional
     color_attributes = []
     for i, key in enumerate(["color", "background"]):
@@ -97,7 +107,7 @@ def format(text="", *args, **kwargs) -> str:
             value = kwargs[key]
         except KeyError:
             continue
-        if isinstance(value, tuple) or isinstance(value , list):
+        if isinstance(value, tuple) or isinstance(value, list):
             attribute = _color(*value, drawing_level=i)
         elif isinstance(value, dict):
             attribute = _color(**value, drawing_level=i)
@@ -106,11 +116,15 @@ def format(text="", *args, **kwargs) -> str:
 
         color_attributes.append(attribute)
 
-    return _format_rich_text(*text_attributes, *color_attributes) + text + reset()
+    return _format_rich_text(
+        *text_attributes, *color_attributes) + text + reset()
 
-## TextAttributes:
+# TextAttributes:
+
+
 def reset():
     return _format_rich_text(TextAttributes.reset)
+
 
 def bold():
     return _format_rich_text(TextAttributes.bold)
@@ -232,17 +246,18 @@ def color(*args, **kwargs):
     """
     return _format_rich_text(_color(*args, **kwargs))
 
-def _color(name = None, # color name as sting, hex string, rgb tuple/list
-          color_id=None,
-          hex=None,
-          rgb=None,
-          hsl=None,
-          drawing_level = ColorDrawingLevel.foreground,  # color foreground or background
-          bold=False,  # toggle bold colors (16bit support needed)
-          # toggle blink or bright mode (both are provided for convenience)
-          # 256 bit color support needed
-          blink=False, bright=False,
-          colormode=8):# gets overwritten by bold or bright/blink, provided for convenience
+
+def _color(name=None,  # color name as sting, hex string, rgb tuple/list
+           color_id=None,
+           hex=None,
+           rgb=None,
+           hsl=None,
+           drawing_level=ColorDrawingLevel.foreground,  # color foreground or background
+           bold=False,  # toggle bold colors (16bit support needed)
+           # toggle blink or bright mode (both are provided for convenience)
+           # 256 bit color support needed
+           blink=False, bright=False,
+           colormode=8):  # gets overwritten by bold or bright/blink, provided for convenience
     # Parse drawing level
     drawing_level = utils.parse_drawing_level(drawing_level)
     colormode = utils.parse_colormode(colormode, blink, bright, bold)
@@ -258,6 +273,8 @@ def _color(name = None, # color name as sting, hex string, rgb tuple/list
     return drawing_level + color_string
 
 # convenience functions:
+
+
 def color_8bit(name, drawing_level=ColorDrawingLevel.foreground):
     if utils.is_8bit_color(name):
         return _format_rich_text(drawing_level + Colors[name])
@@ -303,11 +320,14 @@ def white(drawing_level=ColorDrawingLevel.foreground):
 
 def _format_rich_text(*formatting_commands):
     outString = ANSICommands.start
-    logging.debug("_format_rich_text received: {}".format(", ".join(formatting_commands)))
+    logging.debug(
+        "_format_rich_text received: {}".format(
+            ", ".join(formatting_commands)))
     outString += ANSICommands.separator.join(formatting_commands)
     outString += ANSICommands.stop
     logging.debug(ANSICommands._debug_esc + outString[1:])
     return outString
+
 
 if __name__ == '__main__':
     import doctest
