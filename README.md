@@ -1,4 +1,4 @@
-PyANSIEscapes - Console Manupulation using ANSI Escapes Sequences
+PyANSIEscapes - Console Manipulation using ANSI Escapes Sequences
 =========================================================================
 
 This package provides human readable functions for adding ANSI escapes sequences to your python console outputs.
@@ -29,7 +29,7 @@ print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
 
 API-Reference
 --------------
-You can acces the docs using `help(ansi)` in a python REPL or see [docs.md] (docs.md).
+You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs.md).
 
 NOTE: This Package is currently under development therefore not all functions will be documented appropiatly.
 Documentation will be added succesively.
