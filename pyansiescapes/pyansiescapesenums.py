@@ -6,7 +6,7 @@ class StrEnum(str, Enum):
 
 class ANSICommands(StrEnum):
     start = "\u001b["
-    debug_esc = "\\u001b"
+    _debug_esc = "\\u001b"
     stop = "m"
     separator = ";"
 
