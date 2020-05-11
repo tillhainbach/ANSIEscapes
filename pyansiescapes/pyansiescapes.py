@@ -7,48 +7,50 @@ import inspect
 
 _logger = logging.getLogger(__file__)
 # Curser controls:
+def cursor_up(number_of_lines: int=1) -> str:
+    """Move cursor up number_of_lines lines."""
+    return ANSICommands.start + "{:d}A".format(number_of_lines)
 
 
-def cursor_up(numberOfLines=1):
-    return ANSICommands.start + "{:d}A".format(numberOfLines)
-
-
-def cursor_down(numberOfLines=1):
-    return ANSICommands.start + "{:d}B".format(numberOfLines)
+def cursor_down(number_of_lines:int=1) -> str:
+    """Move cursor down number_of_lines lines."""
+    return ANSICommands.start + "{:d}B".format(number_of_lines)
 
 # Clearers:
-
-
-def clear_to_end_of_line():
+def clear_to_end_of_line() -> str:
+    """Clear line from current cursor position to the end."""
     return ANSICommands.start + "0K"
 
 
-def clear_to_start_of_line():
+def clear_to_start_of_line() -> str:
+    """Clear line from start to current cursor position."""
     return ANSICommands.start + "1K"
 
 
-def clear_line():
+def clear_line() -> str:
+    """Clear the entire line from start to end."""
     return ANSICommands.start + "2K"
 
 
-def clear_lines(numberOfLines=1):
-    return ((clear_line() + cursor_up()) * numberOfLines)
+def clear_lines(number_of_lines: int=1) -> str:
+    """Clear number_of_lines lines."""
+    return ((clear_line() + cursor_up()) * number_of_lines)
 
 
-def clear_screen_until_end():
+def clear_screen_until_end() -> str:
     return ANSICommands.start + "0J"
 
 
-def clear_screen_to_beginning():
+def clear_screen_to_beginning() -> str:
     return ANSICommands.start + "1J"
 
 
-def clear_screen():
+def clear_screen() -> str:
     return ANSICommands.start + "2J"
 
 
 # Rich Text formatting:
-def format(text="", *args, **kwargs) -> str:
+def format(text:str="", *args, **kwargs) -> str:
     """Return formatted text as str.
 
     Uses the formatting attributes given in *args or **kwargs.
@@ -122,40 +124,40 @@ def format(text="", *args, **kwargs) -> str:
 # TextAttributes:
 
 
-def reset():
+def reset() -> str:
     return _format_rich_text(TextAttributes.reset)
 
 
-def bold():
+def bold() -> str:
     return _format_rich_text(TextAttributes.bold)
 
 
-def underscore():
+def underscore() -> str:
     return _format_rich_text(TextAttributes.underscore)
 
 
-def underline():
+def underline() -> str:
     return _format_rich_text(TextAttributes.underline)
 
 
-def bright():
+def bright() -> str:
     return _format_rich_text(TextAttributes.bright)
 
 
-def blink():
+def blink() -> str:
     return _format_rich_text(TextAttributes.blink)
 
 
-def reversed():
+def reversed() -> str:
     return _format_rich_text(TextAttributes.reversed)
 
 
-def concealed():
+def concealed() -> str:
     return _format_rich_text(TextAttributes.concealed)
 
 
 # Colors:
-def color(*args, **kwargs):
+def color(*args, **kwargs) -> str:
     """Return ANSI Escape Sequence for specified color.
 
     Color value argument get parsed in this order:
@@ -247,17 +249,15 @@ def color(*args, **kwargs):
     return _format_rich_text(_color(*args, **kwargs))
 
 
-def _color(name=None,  # color name as sting, hex string, rgb tuple/list
+def _color(name=None,
            color_id=None,
            hex=None,
            rgb=None,
            hsl=None,
-           drawing_level=ColorDrawingLevel.foreground,  # color foreground or background
-           bold=False,  # toggle bold colors (16bit support needed)
-           # toggle blink or bright mode (both are provided for convenience)
-           # 256 bit color support needed
+           drawing_level=ColorDrawingLevel.foreground,
+           bold=False,
            blink=False, bright=False,
-           colormode=8):  # gets overwritten by bold or bright/blink, provided for convenience
+           colormode=8) -> str:
     # Parse drawing level
     drawing_level = utils.parse_drawing_level(drawing_level)
     colormode = utils.parse_colormode(colormode, blink, bright, bold)
@@ -275,50 +275,100 @@ def _color(name=None,  # color name as sting, hex string, rgb tuple/list
 # convenience functions:
 
 
-def color_8bit(name, drawing_level=ColorDrawingLevel.foreground):
+def color_8bit(name, drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit colors.
+
+    Trys to find the color_id for provide name. Returns an empty string if name
+    is not an 8-bit color.
+    Parameters:
+    name: Colors-Obj, str.
+        A color name. Any color name in Colors.
+
+    drawing_level: str or ColorDrawingLevel-Obj
+        The color drawing level.
+        Valid foreground values are:
+            "foreground", ColorDrawingLevel.foreground, 0, "3"
+        Valid background values are:
+            "background", ColorDrawingLevel.background, 1, "4"
+        Default: "foreground"
+    """
     if utils.is_8bit_color(name):
+        drawing_level = utils.parse_drawing_level(drawing_level)
         return _format_rich_text(drawing_level + Colors[name])
     else:
         return ""
 
 
-def background(name):
+def background(*args, **kwargs) -> str:
+    """Convenience function for colored backgrounds.
+
+    Returns a call to color with drawing_level set to background.
+    See color for further description of input arguments. Drawing_level keyword
+    argument should be omitted."""
     return color(name, drawing_level=ColorDrawingLevel.background)
 
 
-def black(drawing_level=ColorDrawingLevel.foreground):
+def black(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit black color.
+
+    See color_8bit for further details."""
     return color_8bit("black")
 
 
-def red(drawing_level=ColorDrawingLevel.foreground):
+def red(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit red color.
+
+    See color_8bit for further details."""
     return color_8bit("red")
 
 
-def green(drawing_level=ColorDrawingLevel.foreground):
+def green(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit green color.
+
+    See color_8bit for further details."""
     return color_8bit("green")
 
 
-def yellow(drawing_level=ColorDrawingLevel.foreground):
+def yellow(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit yellow color.
+
+    See color_8bit for further details."""
     return color_8bit("yellow")
 
 
-def blue(drawing_level=ColorDrawingLevel.foreground):
+def blue(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit blue color.
+
+    See color_8bit for further details."""
     return color_8bit("blue")
 
 
-def magenta(drawing_level=ColorDrawingLevel.foreground):
+def magenta(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit magenta color.
+
+    See color_8bit for further details."""
     return color_8bit("magenta")
 
 
-def cyan(drawing_level=ColorDrawingLevel.foreground):
+def cyan(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit cyan color.
+
+    See color_8bit for further details."""
     return color_8bit("cyan")
 
 
-def white(drawing_level=ColorDrawingLevel.foreground):
+def white(drawing_level=ColorDrawingLevel.foreground) -> str:
+    """Convenience function for 8-bit white color.
+
+    See color_8bit for further details."""
     return color_8bit("white")
 
 
-def _format_rich_text(*formatting_commands):
+def _format_rich_text(*formatting_commands: str) -> str:
+    """Return an ANSI Escapes Sequence for rich text formatting.
+
+    Mutiple formatting commands are chained using the ANSI command seperator.
+    """
     outString = ANSICommands.start
     logging.debug(
         "_format_rich_text received: {}".format(

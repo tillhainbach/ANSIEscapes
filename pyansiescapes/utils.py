@@ -5,47 +5,25 @@ import logging
 import inspect
 
 _logger = logging.getLogger(__file__)
-
-# Little helpers:
-
-
-def any_is_not_none(*args):
-    return any(arg is not None for arg in args)
-
-
-def all_are_none(*args):
-    return all(arg is None for arg in args)
-
-
-def any_is_none(*args):
-    return any(arg is None for arg in args)
-
-
-def all_are_not_none(*args):
-    return all(arg is not None for arg in args)
-
-# Checkers:
-
-
-def is_8bit_color(name):
-    return name in Colors.__members__.keys()
-
-
-def is_valid_hex_string(hex):
-    return (hex.startswith("#") and len(hex) ==
-            7 and has_only_valid_characters(hex))
-
-
-_valid_hex_characters = set("#abcdef0123456789")
-
-
-def has_only_valid_characters(hex):
-    return set(hex) <= _valid_hex_characters
-
-# Parses:
-
-
+#--------------------- Parsers ------------------------------
 def parsing_switcher(argc, arg):
+    """Return get color_id function for argument arg.
+
+    If argument is 'name', parse name first to check if user did not
+    provide a hexadecimal, rgb or hsl value.
+
+    Parameters:
+    argc: int
+        The positional argument count [1-4] which specifies the argument type.
+
+    arg: int, str, tuple, list.
+        The color argument.
+
+    Return:
+    -------
+    func-obj
+        The get_color_id_from_{type} function obj.
+    """
     switcher = {0: get_color_id_from_id,
                 1: get_color_id_from_name,
                 2: get_color_id_from_hex,
@@ -60,7 +38,7 @@ def parsing_switcher(argc, arg):
 
 
 def parse_drawing_level(drawing_level):
-    """Parse drawing level in to legal ANSI drawing level Sequence."""
+    """Parse drawing level into legal ANSI drawing level Sequence."""
     if isinstance(drawing_level, int):
         try:
             drawing_level = list(ColorDrawingLevel)[drawing_level]
@@ -255,14 +233,16 @@ def clip_to_closes_color(color):
 
 
 def _round_to_next_bin(val, bins):
-    left = bisect_right(bins, val)
-    print(bins[left - 1], left)
-    ret = _get_closest(val, *bins[left - 1:left + 1]
-                       ) if left != len(bins) else bins[left - 1]
+    """Return the bin in bins closest to value."""
+    right = bisect_right(bins, val)
+    left = right - 1
+    ret = _get_closest(val, *bins[left:right+ 1]
+                       ) if right != len(bins) else bins[left]
     return ret
 
 
 def _get_closest(val, left, right):
+    """Return left or right depending on which is closer to val"""
     ret = left if val - left < right - val else right
     return ret
 
@@ -287,12 +267,37 @@ def get_first_color_argument(*args):
 
 
 def get_color_id_from_id(color_id, colormode):
+    """Return color_id as str and toggle colormode 256 if necessary."""
     if color_id > 8:
         colormode = 256
     return str(color_id), colormode
 
 
 def get_color_id_from_color_enum(key, color_enum):
+    """Return color_id as str for key in color_enum
+
+    Parameters:
+    -----------
+    key: str
+        A Color key as str. Any of format:
+            name: '^[a-z, A-z, 0-9]*' (e.g. "blue")
+            hex: '^hex_[0-9,a-f]{6}$' (e.g. "hex_ffffff")
+            rgb: '^rgb_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$'(e.g. rbg_255_0_0)
+            hsl: '^hsl_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$'(e.g. hsl_255_0_0)
+
+    color_enum: Colors or Colors256 Enum
+        An enum-obj of type Colors or Colors256.
+
+    Return:
+    -------
+    str
+        Color id as str ('^[0-9]{1,3}$' e.g. '102').
+
+    Raise:
+    -------
+    KeyError
+        Raise KeyError if key is not a valid color key for Color Enum.
+    """
     try:
         color_id = color_enum[key]
     except KeyError as E:
@@ -301,25 +306,82 @@ def get_color_id_from_color_enum(key, color_enum):
 
 
 def get_color_id_from_name(name, colormode):
-    if name not in Colors.__members__.keys():
-        colormode = 256
-    color_enum = Colors
+    """Return a call to get_color_id_from_color_enum.
+
+    Parses name into all lower cases letters and toggles colormode 256 if
+    name is not an 8-bit Color name.
+
+    Parameters:
+    -----------
+    name: str
+        A color name as str with format name: '^[a-z, A-z, 0-9]*' (e.g. "blue").
+
+    colormode: int
+        Any integer in [8, 16, 256].
+
+    Return:
+    -------
+    A call to get_color_id_from_color_enum
+
+    """
     if colormode == 256:
         color_enum = Colors256
+    else: # colormode != 256
+        color_enum = Colors
+        if not is_8bit_color(name):
+            colormode = 256
     return get_color_id_from_color_enum(name.lower(), color_enum), colormode
 
 
 def get_color_id_from_hex(hex, colormode):
+    """Return a call to get_color_id_from_color_enum.
+
+    Parses hex str (e.g. "#ffffff")into valid key format (e.g. "hex_ffffff").
+
+    Parameters:
+    -----------
+    hex: str
+        A hexadecimal color value as str with format:
+            '^hex_[0-9,a-f]{6}$' (e.g. "hex_ffffff")
+
+    colormode: any
+        Just provide for compatibility but is ignored since hexdecimal color
+        value toogles colormode 256 automatically.
+
+    Return:
+    -------
+    A call to get_color_id_from_color_enum
+
+    """
     key = parse_hex(hex)
     return get_color_id_from_color_enum(key, Colors256)
 
 
 def get_color_id_from_iterable(iterable, colormode):
+    """Return a call to get_color_id_from_color_enum.
+
+    Parses iterarble (eg. (255, 0, 0) into valid key format (eg. rgb_255_0_0).
+
+    Parameters:
+    -----------
+    iterable: tuple, list
+        A color value as list or tuple with len(3):
+
+    colormode: any
+        Just provide for compatibility but is ignored since rgb/hsl color
+        values toogle colormode 256 automatically.
+
+    Return:
+    -------
+    A call to get_color_id_from_color_enum
+
+    """
     key = parse_iterable(iterable)
     return get_color_id_from_color_enum(key, Colors256)
 
 
 def get_color_string(color_id, colormode):
+    """Return get_color_string func for colormode."""
     switcher = {8: get_color_string_8_bit,
                 16: get_color_string_16_bit,
                 256: get_color_string_256_bit
@@ -328,16 +390,53 @@ def get_color_string(color_id, colormode):
 
 
 def get_color_string_256_bit(color_id):
+    """Return ANSI color command string for 256 bit colors"""
     return Colors._blink + ANSICommands.separator + \
         TextAttributes.blink + ANSICommands.separator + color_id
 
 
 def get_color_string_16_bit(color_id):
+    """Return ANSI color command string for 16 bit (bold) colors"""
     return color_id + ANSICommands.separator + TextAttributes.bold
 
 
 def get_color_string_8_bit(color_id):
+    """Return ANSI color command string for 8 bit colors"""
     return color_id
+
+
+#--------------------- Checker ------------------------------
+def any_is_not_none(*args) -> bool:
+    return any(arg is not None for arg in args)
+
+
+def all_are_none(*args) -> bool:
+    return all(arg is None for arg in args)
+
+
+def any_is_none(*args) -> bool:
+    return any(arg is None for arg in args)
+
+
+def all_are_not_none(*args) -> bool:
+    return all(arg is not None for arg in args)
+
+
+def is_8bit_color(name) -> bool:
+    """Return True if name is a valid key of Colors-Enum."""
+    return name in Colors.__members__.keys()
+
+
+def is_valid_hex_string(hex) -> bool:
+    """Return True if hex is a valid hexadecimal color value string."""
+    return (hex.startswith("#") and len(hex) ==
+            7 and has_only_valid_characters(hex))
+
+
+def has_only_valid_characters(hex) -> bool:
+    """Return True if hex has only valid hexadecimal characters."""
+    _valid_hex_characters = set("#abcdef0123456789")
+    return set(hex) <= _valid_hex_characters
 
 
 if __name__ == '__main__':

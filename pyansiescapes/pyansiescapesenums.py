@@ -1,3 +1,5 @@
+"""Enumerates for different types of ANSI Escape Sequences."""
+
 from enum import IntEnum, Enum
 
 
@@ -6,6 +8,7 @@ class StrEnum(str, Enum):
 
 
 class ANSICommands(StrEnum):
+    """ANSI Escape Sequences defining a command."""
     start = "\u001b["
     _debug_esc = "\\u001b"
     stop = "m"
@@ -13,6 +16,7 @@ class ANSICommands(StrEnum):
 
 
 class TextAttributes(StrEnum):
+    """ANSI Escape Sequences for rich text attributes."""
     reset = "0"  # turn all attributes off
     bold = "1"
     underscore = "4"  # aka underline
@@ -37,6 +41,7 @@ class Colors(StrEnum):
 
 
 class ColorDrawingLevel(StrEnum):
+    """ANSI color drawing level id-strings."""
     foreground = "3"
     background = "4"
 
