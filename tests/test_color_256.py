@@ -51,9 +51,9 @@ def print_colors(
         colormodes=[8],
         display_colorid=True,
         display_colorname=False,
-        display_hex=True,
-        display_rgb=True,
-        display_hsl=True,
+        display_hex=False,
+        display_rgb=False,
+        display_hsl=False,
         drawing_level='foreground',
         ):
 
