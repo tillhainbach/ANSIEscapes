@@ -1,9 +1,9 @@
+"""API for console manipulation using ANSI Escape sequences in Python.
+"""
 from .pyansiescapesenums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
 from . import utils
-from collections.abc import Iterable
 from itertools import chain
 import logging
-import inspect
 
 _logger = logging.getLogger(__file__)
 # Curser controls:

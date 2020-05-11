@@ -1,8 +1,12 @@
+""" Utility functions used by pyansiescapes for either parsing arguments,
+    getting correct ids from ANSI-Enums, or checking for correct types,
+    format etc.
+
+"""
+
 from .pyansiescapesenums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
 from collections.abc import Iterable
-from itertools import chain
 import logging
-import inspect
 
 _logger = logging.getLogger(__file__)
 #--------------------- Parsers ------------------------------
