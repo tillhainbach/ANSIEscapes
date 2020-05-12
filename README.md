@@ -13,14 +13,14 @@ NOTE: This Package is currently under development.
 git clone https://github.com/tillhainbach/pyansiscapes.git
 cd pyansiecapes
 # you need to have version_query installed
-pip install version_query
+pip install -U version_query
 pip install -e .
 ```
 
 Usage
 ------------
 ```python
-import pyansiescapes as ansi
+import pyansiescapes.commands as ansi
 
 # Print blue text on white background:
 print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
