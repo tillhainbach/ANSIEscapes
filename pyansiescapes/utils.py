@@ -47,8 +47,8 @@ def parse_drawing_level(drawing_level: t.DrawingLevelArg) -> str:
     if isinstance(drawing_level, int):
         try:
             drawing_level = list(ColorDrawingLevel)[drawing_level]
-        except IndexError as E:
-            raise E(
+        except IndexError:
+            raise KeyError(
                 "Cannot parse {} into type ColorDrawingLevel".format(drawing_level))
 
     elif not isinstance(drawing_level, ColorDrawingLevel):
@@ -57,8 +57,8 @@ def parse_drawing_level(drawing_level: t.DrawingLevelArg) -> str:
         else:
             try:
                 drawing_level = ColorDrawingLevel[drawing_level]
-            except KeyError as E:
-                raise E(
+            except KeyError:
+                raise KeyError(
                     "Cannot parse {} into type ColorDrawingLevel".format(drawing_level))
 
     return drawing_level
@@ -283,8 +283,8 @@ def get_color_id_from_color_enum(key: str, color_enum: t.ColorEnum) -> str:
     """
     try:
         color_id = color_enum[key]
-    except KeyError as E:
-        raise E("{} is not a valid color key!".format(key))
+    except KeyError:
+        raise KeyError("{} is not a valid color key for {}!".format(key, color_enum))
     return color_id
 
 
@@ -302,9 +302,12 @@ def get_color_id_from_name(name: str, colormode: int) -> t.Tuple[str, int]:
     if colormode == 256:
         color_enum = Colors256
     else: # colormode != 256
-        color_enum = Colors
         if not is_8bit_color(name):
             colormode = 256
+            color_enum = Colors256
+        else:
+            color_enum = Colors
+    
     return get_color_id_from_color_enum(name.lower(), color_enum), colormode
 
 
