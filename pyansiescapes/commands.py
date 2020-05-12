@@ -57,15 +57,15 @@ def clear_screen() -> str:
 def format(text: str, *args: t.Any, **kwargs: t.Any) -> str:
     """Return formatted text as str.
 
-    Uses the formatting attributes given in *args or **kwargs.
+    Uses the formatting attributes given in `*args` or `**kwargs`.
     Postional arguments or keywordarguments that are not supported
     will be ignored.
 
     Args:
         text: The text/string that should be formatted.
-        args: Any number of postional arguments. Unsupported arguments will be
+        *args: Any number of postional arguments. Unsupported arguments will be
             ignored. See "supported arguments" section for futher details.
-        kwargs: Any number of keyword arguments. Unsupported keyword arguments
+        **kwargs: Any number of keyword arguments. Unsupported keyword arguments
             will be ignored. See "supported keywords" section for further
             details.
 
@@ -166,7 +166,8 @@ def color(*args: t.Any, **kwargs: t.Any) -> str:
     """Returns ANSI Escape Sequence for specified color.
 
     Args:
-        see _color().
+        *args: any valid positional argument for :func:`_color`.
+        **kwargs: any valid keyword argument for :func:`color`.
 
     Examples:
         # Get string for 8-bit red text coloring (e.g. foreground).
@@ -278,15 +279,16 @@ def color_8bit(name: str,
 
     Trys to find the color_id for provide name. Returns an empty string if name
     is not an 8-bit color.
+
     Args:
         name: A color name. Any color name in Colors.
-
         drawing_level: The color drawing level.
             Valid foreground values are:
-                "foreground", ColorDrawingLevel.foreground, 0, "3"
+            - "foreground", ColorDrawingLevel.foreground, 0, "3"
             Valid background values are:
-                "background", ColorDrawingLevel.background, 1, "4"
+            - "background", ColorDrawingLevel.background, 1, "4"
             Default: "foreground"
+    
     """
     if utils.is_8bit_color(name):
         drawing_level = utils.parse_drawing_level(drawing_level)
@@ -298,7 +300,7 @@ def color_8bit(name: str,
 def background(*args: t.Any, **kwargs: t.Any) -> str:
     """Convenience function for colored backgrounds.
 
-    Returns a call to color with drawing_level set to background.
+    Returns a call to :func:`color` with drawing_level=:attr:`pyansiescapes.pyansiescapesenums.ColorDrawingLevel.background`.
     See color for further description of input arguments. Drawing_level keyword
     argument should be omitted."""
     return color(name, drawing_level=ColorDrawingLevel.background)
