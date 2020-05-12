@@ -5,7 +5,7 @@ ANSI-Enums, or checking for correct types, format etc.
 
 """
 
-from pyansiescapes.pyansiescapesenums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
+from pyansiescapes.enums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
 import pyansiescapes.types as t
 from collections.abc import Iterable
 import logging
@@ -129,7 +129,7 @@ def parse_color_name(name: t.ColorArg) -> t.ColorArgTuple:
         # Received incorrect argument for "name". Raise TypeError.
         >>> parse_color_name(name=None)
         Traceback (most recent call last):
-            ...
+        ...
         TypeError: Cannot understand \"name=None\" input argument type
 
     """
@@ -178,14 +178,15 @@ def parse_hex(hex: str) -> str:
         # Raise TypeError with hexadecimal color value is wrong.
         >>> parse_hex("ffffff")
         Traceback (most recent call last):
-            ...
+        ...
         TypeError: \"ffffff\" is not a valid hexadecimal color value
 
         # Raise TypeError with hexadecimal color value is wrong.
         >>> parse_hex("#gfffff")
         Traceback (most recent call last):
-            ...
+        ...
         TypeError: \"#gfffff\" is not a valid hexadecimal color value
+
     """
     if is_valid_hex_string(hex):
         hex = 'hex_' + hex[1:]
@@ -296,7 +297,7 @@ def get_color_id_from_name(name: str, colormode: int) -> t.Tuple[str, int]:
     Args:
         name: A color name as str with format name: '^[a-z, A-z, 0-9]*' (e.g. "blue").
 
-    colormode: Any integer in [8, 16, 256].
+        colormode: Any integer in [8, 16, 256].
     """
     if colormode == 256:
         color_enum = Colors256

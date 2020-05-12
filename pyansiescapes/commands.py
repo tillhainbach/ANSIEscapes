@@ -1,6 +1,6 @@
 """API for console manipulation using ANSI Escape sequences in Python.
 """
-from pyansiescapes.pyansiescapesenums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
+from pyansiescapes.enums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
 from pyansiescapes import utils
 import pyansiescapes.types as t
 from itertools import chain

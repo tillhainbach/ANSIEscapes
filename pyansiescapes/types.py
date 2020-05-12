@@ -1,5 +1,5 @@
 from typing import List, Dict, Tuple, Callable, Any, Optional, Iterator, Union
-from pyansiescapes.pyansiescapesenums import *
+from pyansiescapes.enums import *
 
 ColorBins = List[int]
 ColorValueTuple = Tuple[int, int, int]
