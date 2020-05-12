@@ -75,19 +75,25 @@ def format(text: str, *args: t.Any, **kwargs: t.Any) -> str:
         command.
 
     Examples:
-        # Format text to bold and underlined using postional arguments
+        >>> # Format any string and get beautiful console outputs with ease!
+        >>> color_args = dict(name='blue', bold=True)
+        >>> print(format('Hello ANSI!', 'bold', 'underline', color=color_args, background='white'))
+        \x1b[1;4;34;1;47mHello ANSI!\x1b[0m
+
+        >>> # Format text to bold and underlined using postional arguments
         >>> format('Hello ANSI!', 'bold', 'underline')
         \'\\x1b[1;4mHello ANSI!\\x1b[0m\'
 
-        # It's also possible to use keyword arguments with True, False
+        >>> # It's also possible to use keyword arguments with True, False
         >>> format('Hello ANSI!', bold=True, underline=True)
         \'\\x1b[1;4mHello ANSI!\\x1b[0m\'
 
-        # You can also set and color and background color
-        >>> format('Hello ANSI!', color = 'blue', background = 'white')
+        >>> # You can also set font and background color
+        >>> format('Hello ANSI!', color='blue', background='white')
         \'\\x1b[34;47mHello ANSI!\\x1b[0m\'
 
-        >>> format('Hello ANSI!', color = {'name':'blue', 'colormode':256}, background = 'white')
+        >>> # Or provide a keyword argument dict    
+        >>> format('Hello ANSI!', color={'name':'blue', 'colormode':256}, background='white')
         \'\\x1b[38;5;12;47mHello ANSI!\\x1b[0m\'
     """
     # parse positional text attributes
@@ -170,19 +176,19 @@ def color(*args: t.Any, **kwargs: t.Any) -> str:
         **kwargs: any valid keyword argument for :func:`color`.
 
     Examples:
-        # Get string for 8-bit red text coloring (e.g. foreground).
+        >>> # Get string for 8-bit red text coloring (e.g. foreground).
         >>> color(name="red")
         \'\\x1b[31m\'
 
-        # Get string for bold red background.
+        >>> # Get string for bold red background.
         >>> color(name="red", bold=True, drawing_level="background")
         \'\\x1b[41;1m\'
 
-        # Get string for 256-bit red background.
+        >>> # Get string for 256-bit red background.
         >>> color(name="red", bold=True, blink=True, drawing_level="background")
         \'\\x1b[48;5;9m\'
 
-        # Get string for mediumspringgreen foreground 256-bit color.
+        >>> # Get string for mediumspringgreen foreground 256-bit color.
         >>> color(name="mediumspringgreen")
         \'\\x1b[38;5;49m\'
 
@@ -277,7 +283,7 @@ def color_8bit(name: str,
                    ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit colors.
 
-    Trys to find the color_id for provide name. Returns an empty string if name
+    Trys to find the color_id for provided name. Returns an empty string if name
     is not an 8-bit color.
 
     Args:
@@ -300,7 +306,7 @@ def color_8bit(name: str,
 def background(*args: t.Any, **kwargs: t.Any) -> str:
     """Convenience function for colored backgrounds.
 
-    Returns a call to :func:`color` with drawing_level=:attr:`pyansiescapes.pyansiescapesenums.ColorDrawingLevel.background`.
+    Returns a call to :func:`color` with drawing_level= :attr:`enums.ColorDrawingLevel.background`.
     See color for further description of input arguments. Drawing_level keyword
     argument should be omitted."""
     return color(name, drawing_level=ColorDrawingLevel.background)
@@ -310,7 +316,7 @@ def black(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit black color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("black")
 
 
@@ -318,7 +324,7 @@ def red(drawing_level:
             t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit red color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("red")
 
 
@@ -326,7 +332,7 @@ def green(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit green color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("green")
 
 
@@ -334,7 +340,7 @@ def yellow(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit yellow color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("yellow")
 
 
@@ -342,7 +348,7 @@ def blue(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit blue color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("blue")
 
 
@@ -350,7 +356,7 @@ def magenta(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit magenta color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("magenta")
 
 
@@ -358,7 +364,7 @@ def cyan(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit cyan color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("cyan")
 
 
@@ -366,7 +372,7 @@ def white(drawing_level:
               t.DrawingLevelArg = ColorDrawingLevel.foreground) -> str:
     """Convenience function for 8-bit white color.
 
-    See color_8bit for further details."""
+    See :func:`color_8bit` for further details."""
     return color_8bit("white")
 
 
