@@ -181,13 +181,6 @@ will be ignored.
 ### Examples
 
 ```python
->>> # Format any string and get beautiful console outputs with ease!
->>> color_args = dict(name='blue', bold=True)
->>> print(format('Hello ANSI!', 'bold', 'underline', color=color_args, background='white'))
-[1;4;34;1;47mHello ANSI![0m
-```
-
-```python
 >>> # Format text to bold and underlined using postional arguments
 >>> format('Hello ANSI!', 'bold', 'underline')
 '\x1b[1;4mHello ANSI!\x1b[0m'
