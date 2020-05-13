@@ -7,8 +7,6 @@ for formatting Rich Text.
 
 Installation
 -----------
-NOTE: This Package is currently under development.
-
 ```zsh
 git clone https://github.com/tillhainbach/pyansiscapes.git
 cd pyansiecapes
@@ -30,9 +28,16 @@ print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
 API-Reference
 --------------
 You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs/docs.md).
+You may the doc-html-files using sphinx with napoleon extentions.
 
-NOTE: This Package is currently under development therefore not all functions will be documented appropiatly.
-Documentation will be added succesively.
+````zsh
+pip install -U sphinx
+mkdir docs/build
+sphinx-build -b html docs/source docs/build
+```
+
+Open the `index.html`-file to browse through the documentation.
+ 
 
 License
 --------------
