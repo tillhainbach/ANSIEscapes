@@ -1,6 +1,6 @@
 """Enumerates for different types of ANSI Escape Sequences."""
 
-from enum import IntEnum, Enum
+from enum import Enum
 
 
 class StrEnum(str, Enum):
