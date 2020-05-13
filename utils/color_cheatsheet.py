@@ -4,13 +4,12 @@ from pyansiescapes.pyansiescapesenums import Colors256
 import logging
 import sys
 
-def _make_display_name(
-        color,
-        display_colorid=True,
-        display_colorname=False,
-        display_hex=False,
-        display_rgb=False,
-        display_hsl=False):
+def _make_display_name(color, 
+                       display_colorid=True,
+                       display_colorname=False,
+                       display_hex=False,
+                       display_rgb=False,
+                       display_hsl=False):
     name = ""
     info = []
     if display_colorid: name = str(color['colorId'])
@@ -35,13 +34,15 @@ def _color_value_to_string(color_value, key):
 
 def _print_color(ansi_code, display_name="", display_string_length=6):
     #print("{}{}{}m".format(drawing_level, color, additional_attributes), end="")
-    return print(ansi_code + display_name.ljust(display_string_length) + ansi.reset(), end = "")
+    print(ansi_code
+          + display_name.ljust(display_string_length)
+          + ansi.reset(), end = "")
 
 def _get_display_string_legth(display_colorid=True,
-                            display_colorname=False,
-                            display_hex=True,
-                            display_rgb=True,
-                            display_hsl=True):
+                              display_colorname=False,
+                              display_hex=True,
+                              display_rgb=True,
+                              display_hsl=True):
     display_string_length = 6
     if display_colorname:
         name_keys = (key for key in Colors256.__members__.keys() if "_" not in key)
