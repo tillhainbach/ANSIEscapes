@@ -30,7 +30,7 @@ API-Reference
 You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs/docs.md).
 You may the doc-html-files using sphinx with napoleon extentions.
 
-````zsh
+```zsh
 pip install -U sphinx
 mkdir docs/build
 sphinx-build -b html docs/source docs/build
