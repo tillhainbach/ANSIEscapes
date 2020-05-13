@@ -29,7 +29,7 @@ print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
 
 API-Reference
 --------------
-You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs.md).
+You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs/docs.md).
 
 NOTE: This Package is currently under development therefore not all functions will be documented appropiatly.
 Documentation will be added succesively.
