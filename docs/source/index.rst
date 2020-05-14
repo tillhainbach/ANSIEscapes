@@ -6,6 +6,10 @@
 Welcome to pyansiescapes' documentation!
 =========================================
 
+.. role:: py(code)
+   :language: py
+   :class: highlight
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
