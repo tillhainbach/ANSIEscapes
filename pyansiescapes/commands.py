@@ -171,8 +171,8 @@ def color(*args: t.Any, **kwargs: t.Any) -> str:
     """Returns ANSI Escape Sequence for specified color.
 
     Args:
-        *args: any valid positional argument for :func:`_color`.
-        **kwargs: any valid keyword argument for :func:`color`.
+        *args: any valid positional argument for :func:`._color`.
+        **kwargs: any valid keyword argument for :func:`.color`.
 
     Examples:
         >>> # Get string for 8-bit red text coloring (e.g. foreground).
@@ -218,45 +218,37 @@ def _color(name: t.Optional[t.ColorArg] = None, # pylint: disable=too-many-argum
     - bright or blink or colormode == 256 --> 256-bit colormode
 
     Next the condition for 16-bit colormode are checked:
-    - ((color_id < 8 or name in Colors) and bold) or colormode == 16 --> 16-bit colormode
+    - ((color_id < 8 or name in :class:`.Colors`) and bold) or
+    colormode == 16 --> 16-bit colormode
 
     If none of the above conditions are true, fallback to default 8-bit colormode.
 
     Args:
-        name: A color name. Any name in :class:`Colors` or :class:`Colors256`.
-            Integers or Integer-strings will tripper color id parsing.
+        name: A color name. Any name in :class:`.Colors` or :class:`.Colors256`.
+            Integers or Integer-strings will trigger color id parsing.
             Strings with leading "#" will trigger hexa value parsing.
             Tuple, list or array-like will trigger parsing as either rgb- or
             hsl-values based on the input values.
-            See "util.parse_color_name" for details on parsing logic.
-
+            See :func:`.utils.parse_color_name` for details on parsing logic.
         color_id: The color id as integer or integer-string.
-
         hexa: A hexaadecimal color value as str. Must start with a leading "#".
-            See "utils.parse_hexa" for details on parsing logic.
-
+            See :func:`.utils.parse_hex` for details on parsing logic.
         rgb: Color values in rgb color space. Must be iterable and of length 3.
-            See "utils.parse_color_value" for details on parsing logic.
-
+            See :func:`.utils.parse_color_value` for details on parsing logic.
         hsl: Color values in hsl color space. Must be iterable and of lenght 3.
-            See "utils.parse_color_value" for detail on parsing logic.
-
+            See :func:`.utils.parse_color_value` for detail on parsing logic.
         drawing_level: The color drawing level.
             Valid foreground values are:
-                "foreground", ColorDrawingLevel.foreground, 0, "3"
+            - "foreground", ColorDrawingLevel.foreground, 0, "3"
             Valid background values are:
-                "background", ColorDrawingLevel.background, 1, "4"
+            - "background", ColorDrawingLevel.background, 1, "4"
             Default: "foreground"
-
         bold: Triggers bold colors (16-bit).
             Default: False
-
         blink: Triggers "blink/birght" colors (256-bit).
             Deafault: False
-
         bright: Triggers "blink/birght" colors (256-bit).
             Default: False
-
         colormode: Triggers 8-, 16-, or 256-bit colors. Any in (8, 16, 256).
             Default: 8
 
@@ -306,7 +298,7 @@ def color_8bit(
 def background(*args: t.Any, **kwargs: t.Any) -> str:
     """Convenience function for colored backgrounds.
 
-    Returns a call to :func:`color` with drawing_level= :attr:`enums.ColorDrawingLevel.background`.
+    Returns a call to :func:`.color` with drawing_level= :attr:`enums.ColorDrawingLevel.background`.
     See color for further description of input arguments. Drawing_level keyword
     argument should be omitted."""
     return color(*args, **kwargs, drawing_level=ColorDrawingLevel.background)
@@ -317,7 +309,7 @@ def black(
 ) -> str:
     """Convenience function for 8-bit black color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("black", drawing_level)
 
@@ -326,7 +318,7 @@ def red(drawing_level: t.DrawingLevelArg = ColorDrawingLevel.foreground
         ) -> str:
     """Convenience function for 8-bit red color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("red", drawing_level)
 
@@ -336,7 +328,7 @@ def green(
 ) -> str:
     """Convenience function for 8-bit green color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("green", drawing_level)
 
@@ -346,7 +338,7 @@ def yellow(
 ) -> str:
     """Convenience function for 8-bit yellow color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("yellow", drawing_level)
 
@@ -356,7 +348,7 @@ def blue(
 ) -> str:
     """Convenience function for 8-bit blue color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("blue", drawing_level)
 
@@ -366,7 +358,7 @@ def magenta(
 ) -> str:
     """Convenience function for 8-bit magenta color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("magenta", drawing_level)
 
@@ -376,7 +368,7 @@ def cyan(
 ) -> str:
     """Convenience function for 8-bit cyan color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("cyan", drawing_level)
 
@@ -386,7 +378,7 @@ def white(
 ) -> str:
     """Convenience function for 8-bit white color.
 
-	See :func:`color_8bit` for further details.
+	See :func:`.color_8bit` for further details.
 	"""
     return color_8bit("white", drawing_level)
 
