@@ -1,9 +1,6 @@
 pyansiescapes package
 =====================
 
-Submodules
-----------
-
 pyansiescapes.commands module
 -----------------------------
 
@@ -36,11 +33,3 @@ pyansiescapes.utils module
    :undoc-members:
    :show-inheritance:
 
-
-Module contents
----------------
-
-.. automodule:: pyansiescapes
-   :members:
-   :undoc-members:
-   :show-inheritance:
