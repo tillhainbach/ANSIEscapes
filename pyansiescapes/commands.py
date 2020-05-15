@@ -172,7 +172,7 @@ def color(*args: t.Any, **kwargs: t.Any) -> str:
 
     Args:
         *args: any valid positional argument for :func:`._color`.
-        **kwargs: any valid keyword argument for :func:`.color`.
+        **kwargs: any valid keyword argument for :func:`._color`.
 
     Examples:
         >>> # Get string for 8-bit red text coloring (e.g. foreground).
@@ -208,41 +208,56 @@ def _color(name: t.Optional[t.ColorArg] = None, # pylint: disable=too-many-argum
     """Returns ANSI color-string for specified color.
 
     Color value argument get parsed in this order:
-    colorid, name, hexa, rgb, hsl.
+
+    - \(0) colorid, (1) name, (2) hexa, (3) rgb, (4) hsl.
 
     Colormode gets toggled in this order:
-    Conditions for 256-bit colormode are checked first:
-    - color_id is not None and color_id > 8 --> 256-bit colormode
-    - name not in Colors or name is hexa or rgb or hsl --> 256-bit colormode
-    - any(hexa, rgb, hsl) --> 256-bit colormode
-    - bright or blink or colormode == 256 --> 256-bit colormode
 
-    Next the condition for 16-bit colormode are checked:
-    - ((color_id < 8 or name in :class:`.Colors`) and bold) or
-    colormode == 16 --> 16-bit colormode
+    - Conditions for 256-bit colormode are checked first:
+        - :py:`color_id is not None and color_id > 8`
+        - :py:`name not in` :class:`.Colors` or ``name`` is in hexa-, rgb- or
+          hsl-format (see below)
+        - :py:`any(hexa, rgb, hsl)`
+        - :py:`bright or blink or colormode == 256`
 
-    If none of the above conditions are true, fallback to default 8-bit colormode.
+    - Next the condition for 16-bit colormode are checked:
+        - :py:`((color_id < 8 or name in` :class:`.Colors` :py:`) and bold)`
+          :py:`or colormode == 16`
+
+    - If none of the above conditions are true, fallback to default
+        8-bit colormode.
 
     Args:
-        name: A color name. Any name in :class:`.Colors` or :class:`.Colors256`.
-            Integers or Integer-strings will trigger color id parsing.
-            Strings with leading "#" will trigger hexa value parsing.
-            Tuple, list or array-like will trigger parsing as either rgb- or
-            hsl-values based on the input values.
+        name: A color name. 
+            Can be of format:
+
+            - Any name in :class:`.Colors` or :class:`.Colors256`.
+            - Integer or Integer-string (triggers color id parsing.)
+                - Strings with leading ``#`` (triggers hex-value parsing.)
+            - Tuple, list or array-like (triggers parsing as either rgb- or
+              hsl-values based on the input values.)
+            
             See :func:`.utils.parse_color_name` for details on parsing logic.
         color_id: The color id as integer or integer-string.
-        hexa: A hexaadecimal color value as str. Must start with a leading "#".
+        hexa: A hexadecimal color value as str. Must start with a leading ``#``.
+            
             See :func:`.utils.parse_hex` for details on parsing logic.
         rgb: Color values in rgb color space. Must be iterable and of length 3.
             See :func:`.utils.parse_color_value` for details on parsing logic.
         hsl: Color values in hsl color space. Must be iterable and of lenght 3.
             See :func:`.utils.parse_color_value` for detail on parsing logic.
-        drawing_level: The color drawing level.
+        drawing_level:
+            The color drawing level.
+
             Valid foreground values are:
-            - "foreground", ColorDrawingLevel.foreground, 0, "3"
+                - :py:`'foreground'`, :attr:`.ColorDrawingLevel.foreground`,
+                  :py:`0`, :py:`False`, :py:`'3'`
+
             Valid background values are:
-            - "background", ColorDrawingLevel.background, 1, "4"
-            Default: "foreground"
+                - ``'background'``, :attr:`.ColorDrawingLevel.background`, 
+                  :py:`1`, :py:`True`, :py:`'4'`
+
+            Default: :py:`"foreground"`
         bold: Triggers bold colors (16-bit).
             Default: False
         blink: Triggers "blink/birght" colors (256-bit).
@@ -283,11 +298,15 @@ def color_8bit(
     Args:
         name: A color name. Any color name in Colors.
         drawing_level: The color drawing level.
+
             Valid foreground values are:
-            - "foreground", ColorDrawingLevel.foreground, 0, "3"
+                - "foreground", :attr:`.ColorDrawingLevel.foreground`, 0, "3"
+
             Valid background values are:
-            - "background", ColorDrawingLevel.background, 1, "4"
+                - "background", :attr:`.ColorDrawingLevel.background`, 1, "4"
+
             Default: "foreground"
+
     """
     if utils.is_8bit_color(name):
         drawing_level = utils.parse_drawing_level(drawing_level)
@@ -298,7 +317,7 @@ def color_8bit(
 def background(*args: t.Any, **kwargs: t.Any) -> str:
     """Convenience function for colored backgrounds.
 
-    Returns a call to :func:`.color` with drawing_level= :attr:`enums.ColorDrawingLevel.background`.
+    Returns a call to :func:`.color` with drawing_level= :attr:`.ColorDrawingLevel.background`.
     See color for further description of input arguments. Drawing_level keyword
     argument should be omitted."""
     return color(*args, **kwargs, drawing_level=ColorDrawingLevel.background)
