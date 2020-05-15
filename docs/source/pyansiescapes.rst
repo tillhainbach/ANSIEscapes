@@ -1,3 +1,7 @@
+.. role:: py(code) 
+   :language: py
+   :class: highlight
+
 pyansiescapes package
 =====================
 
