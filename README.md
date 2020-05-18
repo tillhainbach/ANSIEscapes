@@ -8,7 +8,7 @@ for formatting Rich Text.
 Installation
 -----------
 ```zsh
-pip install -i https://test.pypi.org/simple/ pyansiescapes
+pip install pyansiescapes
 ```
 
 Usage
