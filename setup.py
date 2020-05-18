@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 import os
-from version_query import query_version_str
+from version_query import predict_version_str
 
 file_dir = os.path.abspath(os.path.dirname(__file__))
-__version__ = query_version_str()
+__version__ = predict_version_str().split("+") [0]
 name = 'pyansiescapes'
 
 # Get the long description from the README file
@@ -21,10 +21,15 @@ setup(
     url='https://github.com/tillhainbach/' + name,
     packages = find_packages(name),
     classifiers=[
-        'Development Stats :: 2 - Pre-Alpha',
+        'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 ',
-        'Programming Language :: Python :: 3 :: only',
+        'Programming Language :: Python :: 3 :: Only',
     ],
     python_requires='>=3.5',
+    project_urls={  # Optional
+        'Bug Reports': 'https://github.com/tillhainbach/' + name + '/issues',
+        'Documentation': 'https://pyansiescapes.readthedocs.io/en/latest/',
+        'Source': 'https://github.com/tillhainbach/' + name,
+    },
 )
