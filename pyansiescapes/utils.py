@@ -6,7 +6,7 @@ ANSI-Enums, or checking for correct types, format etc.
 """
 
 from pyansiescapes.enums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors, Colors256
-import pyansiescapes.types as t
+import pyansiescapes._types as t
 from collections.abc import Iterable
 import logging
 

@@ -33,12 +33,14 @@ release = '0.0.1.dev'
 extensions = [
     'sphinx.ext.napoleon',
     'sphinx_autodoc_typehints',
-    'sphinx_markdown_builder'
+#    'sphinx_markdown_builder'
 ]
+
+smartquotes_action = 'De'
 
 # Napoleon settings
 napoleon_include_private_with_doc = True
-# simplify_optional_unions = False
+simplify_optional_unions = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

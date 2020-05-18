@@ -21,14 +21,6 @@ pyansiescapes.enums module
    :undoc-members:
    :show-inheritance:
 
-pyansiescapes.types module
---------------------------
-
-.. automodule:: pyansiescapes.types
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 pyansiescapes.utils module
 --------------------------
 

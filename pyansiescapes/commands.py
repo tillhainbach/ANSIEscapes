@@ -4,7 +4,7 @@ import logging
 from itertools import chain
 from pyansiescapes.enums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors
 from pyansiescapes import utils
-import pyansiescapes.types as t
+import pyansiescapes._types as t
 
 _logger = logging.getLogger(__file__)
 
@@ -228,7 +228,7 @@ def _color(name: t.Optional[t.ColorArg] = None, # pylint: disable=too-many-argum
         8-bit colormode.
 
     Args:
-        name: A color name. 
+        name: A color name.
             Can be of format:
 
             - Any name in :class:`.Colors` or :class:`.Colors256`.
@@ -236,11 +236,11 @@ def _color(name: t.Optional[t.ColorArg] = None, # pylint: disable=too-many-argum
                 - Strings with leading ``#`` (triggers hex-value parsing.)
             - Tuple, list or array-like (triggers parsing as either rgb- or
               hsl-values based on the input values.)
-            
+
             See :func:`.utils.parse_color_name` for details on parsing logic.
         color_id: The color id as integer or integer-string.
         hexa: A hexadecimal color value as str. Must start with a leading ``#``.
-            
+
             See :func:`.utils.parse_hex` for details on parsing logic.
         rgb: Color values in rgb color space. Must be iterable and of length 3.
             See :func:`.utils.parse_color_value` for details on parsing logic.
@@ -254,7 +254,7 @@ def _color(name: t.Optional[t.ColorArg] = None, # pylint: disable=too-many-argum
                   :py:`0`, :py:`False`, :py:`'3'`
 
             Valid background values are:
-                - ``'background'``, :attr:`.ColorDrawingLevel.background`, 
+                - ``'background'``, :attr:`.ColorDrawingLevel.background`,
                   :py:`1`, :py:`True`, :py:`'4'`
 
             Default: :py:`"foreground"`
