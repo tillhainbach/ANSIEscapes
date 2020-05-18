@@ -23,10 +23,11 @@ def parsing_switcher(argc: int, arg: t.ColorArg) -> t.Callable[[t.ColorArg, int]
 
         arg: The color argument.
 
-    Return
-    -------
-    func-obj
+    Returns:
         The get_color_id_from_{type} function obj.
+        Any of :func:`.get_color_id_from_id`, :func:`.get_color_id_from_name`,
+        :func:`.get_color_id_from_hex` or
+        :func:`.get_color_id_from_color_value`
     """
     switcher = {
         0: get_color_id_from_id,
@@ -69,11 +70,10 @@ def parse_colormode(colormode: int, blink: bool,
     """Parse colormode setters into colormode.
 
     Returns the colormode in int. Blink and Bright will override colormode.
-    Bold overrides colormode if colormode == 8.
-    setting.
+    Bold overrides colormode if :py:`colormode == 8`.
 
     Args:
-        colormode: Colormode for colors. Any in [8, 16, 256].
+        colormode: Colormode for colors. Any in :py:`[8, 16, 256]`.
         blink: Toggle blink/bright/256 bit mode.
         bright: Toggle blink/bright/256 bit mode.
         bold: Toggle bold/16-bit mode.
@@ -95,38 +95,38 @@ def parse_color_name(name: t.ColorArg) -> t.ColorArgTuple:
     """Parses the color name.
 
     Args:
-        name: A color name. Can be any name in Colors or Colors256 as str.
-            Strings with leading "#" will trigger hex value parsing.
+        name: A color name. Can be any name in :class:`.Colors` or :class:`.Colors256` as :py:`str`.
+            Strings with leading ``#`` will trigger hex value parsing.
             Tuple, list or array-like will trigger parsing as either rgb-
             or hsl-values based on the input values.
-            See "_parse_rgb_or_hsl" for details on parsing logic.
+            See :func:`._parse_rgb_or_hsl` for details on parsing logic.
 
     Returns:
         A tuple where the first value defines the color argument category and
         the second value is the color argument parse into the correct type.
 
     Examples:
-        # Color name string as name argument
+        >>> # Color name string as name argument
         >>> parse_color_name(name="blue")
         (1, 'blue')
 
-        # Hexadecimal color value as "name" argument
+        >>> # Hexadecimal color value as "name" argument
         >>> parse_color_name(name="#ffffff")
         (2, '#ffffff')
 
-        # Rgb-values as "name" argument
+        >>> # Rgb-values as "name" argument
         >>> parse_color_name((255, 0, 0))
         (3, (255, 0, 0))
 
-        # Color-id as "name" argument
+        >>> # Color-id as "name" argument
         >>> parse_color_name(name=1)
         (0, 1)
 
-        # Color-id string as "name" argument
+        >>> # Color-id string as "name" argument
         >>> parse_color_name(name="1")
         (0, 1)
 
-        # Received incorrect argument for "name". Raise TypeError.
+        >>> # Received incorrect argument for "name". Raise TypeError.
         >>> parse_color_name(name=None)
         Traceback (most recent call last):
         ...
@@ -159,29 +159,30 @@ def parse_hex(hex: str) -> str:
     """Checks if hex is valid and return it in Colors256-key format.
 
     Args:
-        hex: Hexadecimal color value. Must start with "#", be of lenght 7 and
+        hex: Hexadecimal color value. Must start with ``#``, be of length 7 and
             must be a valid hexadecimal value (all characters must be in
-            set("#abcdef0123456789")).
+            :py:`set("#abcdef0123456789")`).
 
     Returns:
-        The hexadecimal color value in Colors256-key-format (eg. "hex_ffffff").
+        The hexadecimal color value in Colors256-key-format (eg.
+        :py:`"hex_ffffff"`).
 
     Raises:
         TypeError: {hex} is not a valid hexadecimal color value
             Raised if the input hex string is not valid.
 
     Examples:
-        # Parse white hexadecimal color value into Colors256-key.
+        >>> # Parse white hexadecimal color value into Colors256-key.
         >>> parse_hex("#ffffff")
         'hex_ffffff'
 
-        # Raise TypeError with hexadecimal color value is wrong.
+        >>> # Raise TypeError with hexadecimal color value is wrong.
         >>> parse_hex("ffffff")
         Traceback (most recent call last):
         ...
         TypeError: \"ffffff\" is not a valid hexadecimal color value
 
-        # Raise TypeError with hexadecimal color value is wrong.
+        >>> # Raise TypeError with hexadecimal color value is wrong.
         >>> parse_hex("#gfffff")
         Traceback (most recent call last):
         ...
@@ -243,8 +244,8 @@ def get_first_color_argument(*args: t.Any) -> t.ColorArgTuple:
     """Return first argument in args which is not None.
 
     Raises:
-        TypeError: Cannot parse 'None' into a color. Please provide a color!
-            If all arguments are None.
+        TypeError: Cannot parse ``None`` into a color. Please provide a color!
+            If all arguments are ``None``.
     """
     try:
         argc, arg = next(parse_arguments(*args))
@@ -266,16 +267,20 @@ def get_color_id_from_color_enum(key: str, color_enum: t.ColorEnum) -> str:
     """Return color_id as str for key in color_enum
 
     Args:
-        key: A Color key as str. Any of format:
-            name: '^[a-z, A-z, 0-9]*' (e.g. "blue")
-            hex: '^hex_[0-9,a-f]{6}$' (e.g. "hex_ffffff")
-            rgb: '^rgb_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$'(e.g. rbg_255_0_0)
-            hsl: '^hsl_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$'(e.g. hsl_255_0_0)
+        key: A Color key as str.
+            Any of format:
 
-        color_enum: An enum-obj of type Colors or Colors256.
+                - name: :py:`"^[a-z, A-z, 0-9]*"` (e.g. :py:`"blue"`)
+                - hex: :py:`"^hex_[0-9,a-f]{6}$"` (e.g. :py:`"hex_ffffff"`)
+                - rgb: :py:`"^rgb_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$"`
+                  (e.g. :py:`"rbg_255_0_0"`)
+                - hsl: :py:`"^hsl_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}$"`
+                  (e.g. :py:`"hsl_255_0_0"`)
+
+        color_enum: An enum-obj of type :class:`.Colors` or :class:`.Colors256`.
 
     Returns:
-        A color id as str ('^[0-9]{1,3}$' e.g. '102').
+        A color id as str (:py:`"^[0-9]{1,3}$"` e.g. :py:`"102"`).
 
     Raises:
         KeyError: {key} is not a valid color key!
@@ -295,9 +300,12 @@ def get_color_id_from_name(name: str, colormode: int) -> t.Tuple[str, int]:
     name is not an 8-bit Color name.
 
     Args:
-        name: A color name as str with format name: '^[a-z, A-z, 0-9]*' (e.g. "blue").
+        name: A color name.
+            Format:
 
-        colormode: Any integer in [8, 16, 256].
+                - :py:`'^[a-z, A-z, 0-9]*'` (e.g. :py:`"blue"`).
+
+        colormode: Any integer in :py:`[8, 16, 256]`.
     """
     if colormode == 256:
         color_enum = Colors256
@@ -307,21 +315,22 @@ def get_color_id_from_name(name: str, colormode: int) -> t.Tuple[str, int]:
             color_enum = Colors256
         else:
             color_enum = Colors
-    
+
     return get_color_id_from_color_enum(name.lower(), color_enum), colormode
 
 
 def get_color_id_from_hex(hex: str, colormode: int) -> t.Tuple[str, int]:
     """Returns a color id and the correct colormode.
 
-    Parses hex str (e.g. "#ffffff")into valid key format (e.g. "hex_ffffff").
+    Parses hex str (e.g. :py:`"#ffffff"`) into valid key format (e.g. :py:`"hex_ffffff"`).
 
     Args:
-        hex: str
-        A hexadecimal color value as str with format:
-            '^hex_[0-9,a-f]{6}$' (e.g. "hex_ffffff")
+        hex: A hexadecimal color value.
+            Format:
 
-        colormode: Just provide for compatibility but is ignored since
+                - :py:`"^hex_[0-9,a-f]{6}$"` (e.g. :py:`"hex_ffffff"`)
+
+        colormode: Just provided for compatibility but is ignored since
             hexdecimalcolor value toogles colormode 256 automatically.
     """
     key = parse_hex(hex)
@@ -332,12 +341,15 @@ def get_color_id_from_color_value(color_value: t.ColorValue,
                                   colormode: int) -> t.Tuple[str, int]:
     """Returns a color id and the correct colormode.
 
-    Parses iterarble (eg. (255, 0, 0) into valid key format (eg. rgb_255_0_0).
+    Iterarble (eg. :py:`(255, 0, 0)` are parsed into valid key format (eg.
+    :py:`"rgb_255_0_0"`) before lookup. See :func:`.parse_color_value` for
+    details.
 
     Args:
-        color_value: A color value as list or tuple with len(3):
+        color_value: A color value as :py:`list` or :py:`tuple` with
+            :py:`len(color_value) == 3`
 
-        colormode: Just provide for compatibility but is ignored since rgb/hsl
+        colormode: Just provided for compatibility but is ignored since rgb/hsl
             color values toogle colormode 256 automatically.
     """
     key = parse_color_value(color_value)
