@@ -32,7 +32,7 @@ release = '0.0.1.dev'
 # ones.
 extensions = [
     'sphinx.ext.napoleon',
-    'sphinx_autodoc_typehints',
+#    'sphinx_autodoc_typehints',
 #    'sphinx_markdown_builder'
 ]
 
