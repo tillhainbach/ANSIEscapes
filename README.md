@@ -8,11 +8,7 @@ for formatting Rich Text.
 Installation
 -----------
 ```zsh
-git clone https://github.com/tillhainbach/pyansiscapes.git
-cd pyansiecapes
-# you need to have version_query installed
-pip install -U version_query
-pip install -e .
+pip install -i https://test.pypi.org/simple/ pyansiescapes
 ```
 
 Usage
