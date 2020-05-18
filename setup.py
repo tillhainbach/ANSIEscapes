@@ -21,10 +21,10 @@ setup(
     url='https://github.com/tillhainbach/' + name,
     packages = find_packages(name),
     classifiers=[
-    #    'Development Stats :: 3 - Alpha',
+        'Development Stats :: 2 - Pre-Alpha',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 ',
-    #    'Programming Language :: Python :: 3 :: only',
+        'Programming Language :: Python :: 3 :: only',
     ],
     python_requires='>=3.5',
 )
