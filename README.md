@@ -27,21 +27,11 @@ print(ansi.format("Hello ANSI!", color = 'blue', background = 'white'))
 
 API-Reference
 --------------
-You can acces the docs using `help(ansi)` in a python REPL or see [docs](./docs/docs.md).
-You may the doc-html-files using sphinx with napoleon extentions.
+The documentation is hosted on [readthedocs.io](https://pyansiescapes.readthedocs.io/en/latest/)
 
-```zsh
-pip install -U sphinx
-mkdir docs/build
-sphinx-build -b html docs/source docs/build
-```
-
-Open the `index.html`-file to browse through the documentation.
- 
+You can also access the docs using `help(ansi)` in a python REPL.
 
 License
 --------------
 
 This repository is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
-
-
