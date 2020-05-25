@@ -19,7 +19,7 @@ setup(
     long_description = long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/tillhainbach/' + name,
-    packages = find_packages(name),
+    packages = find_packages(),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: MIT License',
