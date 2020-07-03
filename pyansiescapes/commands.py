@@ -5,6 +5,7 @@ from itertools import chain
 from pyansiescapes.enums import ANSICommands, TextAttributes, ColorDrawingLevel, Colors
 from pyansiescapes import utils
 import pyansiescapes._types as t
+import emojis
 
 _logger = logging.getLogger(__file__)
 
@@ -121,8 +122,11 @@ def format(text: str, *args: t.Any, **kwargs: t.Any) -> str: # pylint: disable=r
 
         color_attributes.append(attribute)
 
-    return _format_rich_text(*text_attributes, *
-                             color_attributes) + text + reset()
+    # encode emojis:
+    text = emojis.encode(text)
+
+    return _format_rich_text(*text_attributes,
+                             *color_attributes) + text + reset()
 
 
 # TextAttributes:
