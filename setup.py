@@ -22,7 +22,7 @@ setup(
     packages = find_packages(),
     install_requires=[
           'emojis',
-      ]
+      ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: MIT License',
