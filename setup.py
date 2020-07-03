@@ -20,6 +20,9 @@ setup(
     long_description_content_type="text/markdown",
     url='https://github.com/tillhainbach/' + name,
     packages = find_packages(),
+    install_requires=[
+          'emojis',
+      ]
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: MIT License',
