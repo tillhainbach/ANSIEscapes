@@ -5,6 +5,9 @@ This package provides human readable functions for adding ANSI escapes sequences
 It's loosy based on [ansiescapes](https://github.com/kodie/ansiescapes), however offers more convenience functions
 for formatting Rich Text.
 
+Update: Ships with [emojis](https://pypi.org/project/emojis/), so you can use \:smile\: in your
+        messages(strings) pass to ansi.format()-calls.
+
 Installation
 -----------
 ```zsh
